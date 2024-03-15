@@ -1,16 +1,22 @@
-const express = require('express');
+import express, {Router} from 'express'
+import serverless from 'serverless-http'
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors'); // Import the cors middleware
 
 const app = express();
+const router = Router()
 
 const imageFolder = 'maps/all';
 
-// Use cors middleware to allow requests from any origin
-app.use(cors());
+app.use('/build', express.static('views/build'));
 
-app.get('/randomImage', (req, res) => {
+// Use cors middleware to allow requests from any origin
+router.use(cors());
+
+router.get('/', (req, res) => res.render('index'))
+
+router.get('/randomImage', (req, res) => {
     fs.readdir(imageFolder, { withFileTypes: true }, (err, files) => {
         if (err) {
             console.error('Error reading images directory:', err);
@@ -46,7 +52,5 @@ app.get('/randomImage', (req, res) => {
     });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+app.use('/', router)
+export const handler = serverless(app)

@@ -30,8 +30,8 @@ body{
 
 /* Font */
 
-@font-face { font-family: MouldyCheese; src: url('Fonts/MouldyCheeseRegular-WyMWG.ttf'); } 
-@font-face { font-family: MouldyCheese; font-weight: bold; src: url('Fonts/MouldyCheeseRegular-WyMWG.ttf');}
+@font-face { font-family: MouldyCheese; src: url('../fonts/MouldyCheeseRegular-WyMWG.ttf'); } 
+@font-face { font-family: MouldyCheese; font-weight: bold; src: url('../fonts/MouldyCheeseRegular-WyMWG.ttf');}
 
 #logo{
     display: block;

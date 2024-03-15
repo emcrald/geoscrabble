@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoScrabble</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="Images/pin.jpg">
+    <link rel="stylesheet" href="./build/css/style.css">
+    <link rel="icon" href="./build/Images/pin.jpg">
 <body>
 
-    <img src="Images/logo.png" id="logo">
+    <img src="./build/Images/logo.png" id="logo">
 
     <div id="sections">
         <div class="section" id="main">
@@ -18,21 +18,21 @@
         </div>
 
         <div class="section" id="game">
-            <button id="backButton" onclick="switchSection('main')"><img src="Images/back-arrow.png" id="backArrowImg"></button>
+            <button id="backButton" onclick="switchSection('main')"><img src="./build/Images/back-arrow.png" id="backArrowImg"></button>
             <p id="countryTitle">What's the country?</p>
-            <img draggable="false" id="countryImage" src="maps/asia/India/1024.png">
+            <img draggable="false" id="countryImage" src="./build/maps/asia/India/1024.png">
 
             <div id="input">
                 <input id="countryInput">
                 
                 <button id="submitButton">
-                <img id="submitImage" src="Images/submitTick.png"></button>
+                <img id="submitImage" src="./build/Images/submitTick.png"></button>
             </div>
             
         </div>
 
         <div class="section" id="practice">
-            <button id="backButton" onclick="switchSection('main')"><img src="Images/back-arrow.png" id="backArrowImg"></button>
+            <button id="backButton" onclick="switchSection('main')"><img src="./build/Images/back-arrow.png" id="backArrowImg"></button>
             <p id="practiceTitle">Practice</p>
 
             <button id="europeButton" class="practiceButton" onclick="switchSection('practice')">Europe</button>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="section" id="credits">
-            <button id="backButton" onclick="switchSection('main')"><img src="Images/back-arrow.png" id="backArrowImg"></button>
+            <button id="backButton" onclick="switchSection('main')"><img src="./build/Images/back-arrow.png" id="backArrowImg"></button>
             <p id="creditsTitle">Credits</p>
 
             <p id="creditsTitle2">Developers</p>
@@ -52,12 +52,12 @@
             <div id="creditsContainer">
 
                 <div class="creditsUser" id="dexterz-m">
-                    <img src="Images/creditsDexter.png" id="creditsImage">
+                    <img src="./build/Images/creditsDexter.png" id="creditsImage">
                     <p class="creditsDescription"><a class="creditsDescription" href="https://github.com/dexterz-m">dexterz-m</a></p>
                 </div>
 
                 <div class="creditsUser" id="RoustyTousty">
-                    <img src="Images/creditsRousty.jpeg" id="creditsImage">
+                    <img src="./build/Images/creditsRousty.jpeg" id="creditsImage">
                     <p class="creditsDescription"><a class="creditsDescription" href="https://github.com/RoustyTousty">RoustyTousty</a></p>
                 </div>
 
@@ -71,6 +71,6 @@
 
     <footer id="rights"><a id="rightsLink" href="https://github.com/dexterz-m/geoscrabble">© All rights reserved dexterz-m & RoustyTousty</a></footer>
 
-    <script src="main.js"></script>
+    <script src="./build/js/main.js"></script>
 </body>
 </html>
