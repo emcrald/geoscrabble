@@ -13,7 +13,7 @@ app.use('/build', express.static(path.join(__dirname, 'views/build')));
 
 app.use(cors());
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 router.get('/', (req, res) => {
