@@ -13,9 +13,10 @@ app.use('/build', express.static('views/build'));
 
 app.use(cors());
 
+app.set('view engine', 'ejs');
+
 router.get('/', (req, res) => {
-    const indexPath = path.join(__dirname, 'index.html');
-    res.sendFile(indexPath);
+    res.render('index');
 });
 
 router.get('/randomImage', (req, res) => {
