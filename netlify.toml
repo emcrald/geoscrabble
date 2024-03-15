@@ -3,6 +3,7 @@
   publish = "./dist/"
 [functions]
   external_node_modules = [
+    "ejs",
     "express"
   ]
   included_files = [
