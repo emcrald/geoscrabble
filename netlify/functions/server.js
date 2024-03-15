@@ -1,21 +1,15 @@
-import express from 'express';
-import serverless from 'serverless-http';
-import cors from 'cors';
-import fs from 'fs';
-import path from 'path';
+import express, { Router } from 'express'
+import serverless from 'serverless-http'
+import ejs from 'ejs'
+const server = express()
+const router = Router()
+server.set('view engine', 'ejs')
 
-const app = express();
-const router = express.Router();
+server.use('/build', express.static('views/build'));
 
 const imageFolder = 'maps/all';
 
-app.use('/build', express.static(path.join(__dirname, 'views/build')));
-
-app.use(cors());
-
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/index.html'));
-});
+router.get('/', (req, res) => res.render('index'))
 
 router.get('/randomImage', (req, res) => {
     fs.readdir(imageFolder, { withFileTypes: true }, (err, files) => {
@@ -53,6 +47,5 @@ router.get('/randomImage', (req, res) => {
     });
 });
 
-app.use('/.netlify/functions/server', router);
-
-export const handler = serverless(app);
+server.use('/', router)
+export const handler = serverless(server)

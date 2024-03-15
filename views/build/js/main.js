@@ -25,7 +25,7 @@ function setRandomImage(countryName) {
 }
 
 function fetchRandomImage() {
-    fetch('https://geoscrabble.netlify.app/randomImage')
+    fetch('https://geoscrabbletest.netlify.app/randomImage')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
