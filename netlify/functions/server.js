@@ -1,53 +1,57 @@
-import express, { Router } from 'express';
-import serverless from 'serverless-http';
-import ejs from 'ejs';
-import path from 'path';
+import express, { Router } from 'express'
+import serverless from 'serverless-http'
+import ejs from 'ejs'
+const server = express()
+const router = Router()
+server.set('view engine', 'ejs')
 
-const server = express();
-const router = Router();
-server.set('view engine', 'ejs');
+server.use('/build', express.static('views/build'));
 
-server.use('/build', express.static(path.join(__dirname, 'views/build')));
+router.get('/', (req, res) => res.render('index'))
 
-router.get('/', (req, res) => res.render('index'));
-
-router.get('/randomImage', (req, res) => {
-    const imageFolder = path.join(__dirname, 'views/build/maps/all');
-
-    fs.readdir(imageFolder, { withFileTypes: true }, (err, files) => {
-        if (err) {
-            console.error('Error reading images directory:', err);
-            res.status(500).send('Internal server error');
-            return;
-        }
-        const folderNames = files
-            .filter(file => file.isDirectory())
-            .map(folder => folder.name);
-        if (folderNames.length === 0) {
-            console.error('No folders found');
-            res.status(404).send('No folders found');
-            return;
-        }
-        const randomFolderName = folderNames[Math.floor(Math.random() * folderNames.length)];
-        const folderPath = path.join(imageFolder, randomFolderName);
-        fs.readdir(folderPath, (err, files) => {
-            if (err) {
-                console.error(`Error reading files in folder ${randomFolderName}:`, err);
-                res.status(500).send('Internal server error');
-                return;
-            }
-            const imageFiles = files.filter(file => /\.(png|jpe?g|gif)$/i.test(file));
-            if (imageFiles.length === 0) {
-                console.error(`No image files found in folder ${randomFolderName}`);
-                res.status(404).send(`No image files found in folder ${randomFolderName}`);
-                return;
-            }
-            const randomImageFileName = imageFiles[Math.floor(Math.random() * imageFiles.length)];
-            const randomImagePath = path.join(folderPath, randomImageFileName);
-            res.sendFile(randomImagePath);
-        });
-    });
+router.get("/dashboard", async (req, res) => {
+    try {
+        const data = await Statistics.findOne({});
+        const html = await ejs.renderFile('views/dashboard.ejs', { data });
+        res.send(html);
+    } catch (err) {
+        console.error('Error fetching statistics:', err);
+        res.render('500')
+    }
 });
 
-server.use('/', router);
-export const handler = serverless(server);
+router.get("/api/data", async (req, res) => {
+    try {
+        const statistics = await Statistics.findOne({});
+        res.json({
+            guilds: statistics.guilds,
+            users: statistics.users,
+            channels: statistics.channels,
+            ping: statistics.ping,
+            bans: statistics.bans,
+            profiles: statistics.profiles,
+            lastUpdate: statistics.lastUpdate,
+            events: statistics.events,
+        });
+    } catch (err) {
+        console.error('Error fetching statistics for API:', err);
+        res.render('500')
+    }
+});
+
+router.get("/invite", (req, res) => res.redirect('https://discord.com/oauth2/authorize?client_id=971024098098569327&permissions=1498209971415&scope=bot%20applications.commands'));
+router.get("/support", (req, res) => res.redirect('https://discord.com/invite/Gj8xWwg38U'))
+
+router.get('/guild', (req, res) => res.render('guild'))
+router.get('/privacy', (req, res) => res.render('privacy'))
+router.get('/terms', (req, res) => res.render('terms'))
+router.get('/blank', (req, res) => res.render('blank'))
+router.get('/billing', (req, res) => res.render('billing'))
+router.get('/premium', (req, res) => res.render('billing'))
+
+router.get('/404', (req, res) => res.render('404'))
+router.get('/500', (req, res) => res.render('500'))
+router.get('*', (req, res) => res.render('404'))
+
+server.use('/', router)
+export const handler = serverless(server)
