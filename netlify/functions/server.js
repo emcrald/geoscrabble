@@ -11,9 +11,11 @@ const imageFolder = 'maps/all';
 
 app.use('/build', express.static('views/build'));
 
+// Enable CORS for all routes
 app.use(cors());
 
-router.get('/', (req, res) => res.send('index'));
+// Serve index.html
+app.get('/', express.static(path.join(__dirname, 'index')));
 
 router.get('/randomImage', (req, res) => {
     fs.readdir(imageFolder, { withFileTypes: true }, (err, files) => {
