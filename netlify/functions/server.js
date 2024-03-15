@@ -1,17 +1,18 @@
-import express, { Router } from 'express'
-import serverless from 'serverless-http'
-import ejs from 'ejs'
-const server = express()
-const router = Router()
-server.set('view engine', 'ejs')
+import express, { Router } from 'express';
+import serverless from 'serverless-http';
+import path from 'path';
 
-server.use('/build', express.static('views/build'));
+const server = express();
+const router = Router();
+server.set('view engine', 'ejs');
 
-const imageFolder = 'maps/all';
+server.use('/build', express.static(path.join(__dirname, 'views/build')));
 
-router.get('/', (req, res) => res.render('index'))
+router.get('/', (req, res) => res.render('index'));
 
 router.get('/randomImage', (req, res) => {
+    const imageFolder = path.join(__dirname, 'views/build/maps/all');
+
     fs.readdir(imageFolder, { withFileTypes: true }, (err, files) => {
         if (err) {
             console.error('Error reading images directory:', err);
@@ -47,5 +48,5 @@ router.get('/randomImage', (req, res) => {
     });
 });
 
-server.use('/', router)
-export const handler = serverless(server)
+server.use('/', router);
+export const handler = serverless(server);
