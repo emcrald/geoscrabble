@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import serverless from 'serverless-http';
+import ejs from 'ejs';
 import path from 'path';
 
 const server = express();
